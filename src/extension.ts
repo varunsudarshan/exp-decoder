@@ -59,8 +59,16 @@ function decodeExp(editor: vscode.TextEditor, doc: vscode.TextDocument){
 		// editor.edit( editBuilder => {
 		// 	editBuilder.replace(all,decodedStr)
 		// });
-		editor.edit(eb => eb.replace(all, decodedStr));
+		// editor.edit(eb => eb.replace(all, decodedStr));
+		openInUntitled(decodedStr);
 	});
+}
+async function openInUntitled(content: string, language?: string) {
+    const document = await vscode.workspace.openTextDocument({
+        language,
+        content,
+    });
+    vscode.window.showTextDocument(document);
 }
 
 // this method is called when your extension is deactivated

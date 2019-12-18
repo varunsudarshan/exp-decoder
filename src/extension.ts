@@ -49,7 +49,7 @@ function decodeExp(editor: vscode.TextEditor, doc: vscode.TextDocument){
 		let regExp = new RegExp('&',"g");
 		decodedStr = decodedStr.replace(
 			regExp,"\n"
-			)
+			);
 		// decodedStr = decodedStr.replace('&','\n')
 		// edit.replace(s, decodedStr);
 		const all = new vscode.Range(

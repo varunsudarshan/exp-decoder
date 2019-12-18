@@ -2,7 +2,7 @@
 	"name": "exp-decoder",
 	"displayName": "EXP decoder",
 	"description": "Decode SonicWall Firewall backup config ( EXP ) files",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"publisher": "varunsudarshan",
 	"repository": {
 		"type": "git",

@@ -44,7 +44,7 @@ function decodeExp(editor: vscode.TextEditor, doc: vscode.TextDocument){
 	editor.edit(function(edit){
 		// let txt: string = d.getText(new vscode.Range(s.start,s.end));
 		let filestr = doc.getText();
-		let b: Buffer = new Buffer(filestr,'base64');
+		let b: Buffer = Buffer.from(filestr,'base64');
 		let decodedStr = b.toString();
 		let regExp = new RegExp('&',"g");
 		decodedStr = decodedStr.replace(

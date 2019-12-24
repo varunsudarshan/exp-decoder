@@ -2,7 +2,7 @@
 	"name": "exp-decoder",
 	"displayName": "EXP decoder",
 	"description": "Decode SonicWall configuration/preferences file(Extension: .exp)",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"publisher": "varunsudarshan",
 	"repository": {
 		"type": "git",

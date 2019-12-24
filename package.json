@@ -15,14 +15,21 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.decodeEXP"
+		"onCommand:extension.decodeEXP",
+		"onCommand:extension.compareEXPWith"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [{
-			"command": "extension.decodeEXP",
-			"title": "Decode EXP"
-		}],
+		"commands": [
+			{
+				"command": "extension.decodeEXP",
+				"title": "Decode EXP"
+			},
+			{
+				"command": "extension.compareEXPWith",
+				"title": "Compare Two EXP files"
+			}
+		],
 		"keybindings": [
 			{
 				"command": "extension.decodeEXP",

@@ -20,7 +20,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	});
 
-	context.subscriptions.push(decoder);
+	let decodeAndCompareTwo = vscode.commands.registerCommand('extension.compareEXPWith', () => {
+		chooseFiles();
+	});
+
+	context.subscriptions.push(
+		decoder,
+		decodeAndCompareTwo
+	);
 }
 
 function decodeExp(doc: vscode.TextDocument): string {
@@ -42,12 +49,44 @@ function decodeExp(doc: vscode.TextDocument): string {
 		return "";
 	}
 }
+
 async function openInUntitled(content: string, language?: string) {
 	const document = await vscode.workspace.openTextDocument({
 		language,
 		content,
 	});
 	vscode.window.showTextDocument(document);
+}
+function openHidden(content: string, language?: string): any {
+	const document = vscode.workspace.openTextDocument({
+		language,
+		content,
+	});
+	return document;
+}
+
+async function chooseFiles() {
+	let docArray: any[] = [];
+	const options: vscode.OpenDialogOptions = {
+		canSelectMany: true,
+		openLabel: 'Open',
+		filters: {
+			'EXP files': ['exp'],
+			'Text files': ['txt'],
+			'All files': ['*']
+		}
+	};
+	const chosenFiles = await vscode.window.showOpenDialog(options).then(fileUri => {
+		return fileUri;
+	});
+	if (chosenFiles) {
+
+		for (const file of chosenFiles) {
+			const fileDoc = await vscode.workspace.openTextDocument(file);
+			docArray.push(await openHidden(decodeExp(fileDoc)));
+		}
+		await vscode.commands.executeCommand('vscode.diff', docArray[0].uri, docArray[1].uri, "Exp Diff");
+	}
 }
 
 export function deactivate() { }

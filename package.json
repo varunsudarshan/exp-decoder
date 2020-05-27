@@ -2,7 +2,7 @@
 	"name": "exp-decoder",
 	"displayName": "EXP decoder",
 	"description": "Decode SonicWall configuration/preferences file(Extension: .exp)",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"publisher": "varunsudarshan",
 	"repository": {
 		"type": "git",
@@ -16,6 +16,7 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.decodeEXP",
+		"onCommand:extension.encodeEXP",
 		"onCommand:extension.compareEXPWith"
 	],
 	"main": "./out/extension.js",
@@ -24,6 +25,10 @@
 			{
 				"command": "extension.decodeEXP",
 				"title": "Decode EXP"
+			},
+			{
+				"command": "extension.encodeEXP",
+				"title": "Encode EXP"
 			},
 			{
 				"command": "extension.compareEXPWith",
@@ -35,12 +40,20 @@
 				"command": "extension.decodeEXP",
 				"key": "ctrl+r ctrl+d",
 				"when": "editorTextFocus"
+			},
+			{
+				"command": "extension.encodeEXP",
+				"key": "ctrl+r ctrl+e",
+				"when": "editorTextFocus"
 			}
 		],
 		"menus": {
 			"editor/context": [
 				{
 				  "command": "extension.decodeEXP"
+				},
+				{
+					"command": "extension.encodeEXP"
 				}
 			  ]
 		  }

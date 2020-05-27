@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { print } from 'util';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -19,20 +20,37 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 	});
+	let encoder = vscode.commands.registerCommand('extension.encodeEXP', () => {
+		vscode.window.showInformationMessage('Encoding EXP...');
+		let editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			return;
+		}
+		let doc = editor.document;
+		let encodedStr: string = encodeEXP(doc);
+		if (encodedStr) {
+			openInUntitled(encodedStr);
+			vscode.window.showInformationMessage('Encoded EXP!');
+		}
+		else {
+			vscode.window.showErrorMessage("Oops! Doesn't look you're trying to decode a valid backup file!");
+		}
 
+	});
 	let decodeAndCompareTwo = vscode.commands.registerCommand('extension.compareEXPWith', () => {
 		chooseFiles();
 	});
 
 	context.subscriptions.push(
 		decoder,
+		encoder,
 		decodeAndCompareTwo
 	);
 }
 
 function decodeExp(doc: vscode.TextDocument): string {
 	let filestr = doc.getText();
-	let b: Buffer = Buffer.from(filestr, 'base64');
+	let b= Buffer.from(filestr, 'base64');
 	let decodedStr = b.toString();
 	let regExp = new RegExp('&', "g");
 	decodedStr = decodedStr.replace(
@@ -49,7 +67,21 @@ function decodeExp(doc: vscode.TextDocument): string {
 		return "";
 	}
 }
-
+function encodeEXP(doc: vscode.TextDocument): string {
+	let filestr = doc.getText();
+	let b = Buffer.from(filestr);
+	let encodedStr = b.toString();
+	let regExp = new RegExp('\n', "g");
+	encodedStr = encodedStr.replace(
+		regExp, "&"
+	);
+	const all = new vscode.Range(
+		doc.positionAt(0),
+		doc.positionAt(doc.getText().length)
+	);
+	encodedStr = Buffer.from(encodedStr, 'binary').toString('base64');
+	return encodedStr;
+}
 async function openInUntitled(content: string, language?: string) {
 	const document = await vscode.workspace.openTextDocument({
 		language,

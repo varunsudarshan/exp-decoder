@@ -79,7 +79,7 @@ function encodeEXP(doc: vscode.TextDocument): string {
 		doc.positionAt(0),
 		doc.positionAt(doc.getText().length)
 	);
-	encodedStr = Buffer.from(encodedStr, 'binary').toString('base64');
+	encodedStr = Buffer.from(encodedStr, 'binary').toString('base64') + "&&";
 	return encodedStr;
 }
 async function openInUntitled(content: string, language?: string) {
